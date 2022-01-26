@@ -2,3 +2,4 @@ data/maildir
 *checkpoint*
 *.png
 *.pdf
+*.csv

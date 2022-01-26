@@ -32,5 +32,9 @@ def parse_maildir2(path):
     df["year"] = df["date"].apply(lambda x: x.year)
     df["month"] = df["date"].apply(lambda x: x.month)
     df["seconds_since_midnight"] = df["date"].apply(lambda x: x.time().hour * 60 * 60 + x.time().minute * 60 + x.time().second)
+    df["hour"] = df["date"].apply(lambda x: x.time().hour)
+    df["minute"] = df["date"].apply(lambda x: x.time().minute)
+    df["second"] = df["date"].apply(lambda x: x.time().second)
+    df = df.sort_values(by="date").drop_duplicates(subset=["subject", "from", "minute", "second"],keep="first")
     return df
    
