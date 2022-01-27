@@ -3,3 +3,8 @@ data/maildir
 *.png
 *.pdf
 *.csv
+doc/*
+!*.tex
+!*.md
+!*.sty
+!doc/tmp/*.png
