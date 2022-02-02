@@ -8,3 +8,4 @@ doc/*
 !*.md
 !*.sty
 !doc/tmp/*.png
+!lib.bib

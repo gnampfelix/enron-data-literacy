@@ -27,6 +27,7 @@
 \usepackage{microtype}      % microtypography
 \usepackage{xcolor}         % colors
 \usepackage{graphicx}
+\setcitestyle{numbers,square}
 
 \title{Analyzing the Enron mails}
 
@@ -63,8 +64,18 @@
 \end{abstract}
 
 \section{Introduction}
-TODO: Introduce Enron mail corpus, briefly summarize where the data comes from
-and how it was prepared BEFORE we accessed it
+After the US energy cooperation Enron declared bankrupcy in 2001
+\citep{10.1257/089533003765888403}, law enforcment agencies released enormous
+amounts of e-mail communication between Enron employees to the public. This raw
+database export was cleaned up as the \emph{Enron Mail Corups} by
+\citet{Klimt2004IntroducingTE}. Today, this dataset contains over 500M mails
+from the mailboxes of Enron employees and can be accessed via
+\url{https://www.cs.cmu.edu/~enron/}. The e-mails contained in this dataset span
+over multiple years, and interestingly, also contain e-mail conversations
+throughout 2000 and 2001. As the Enron scandal enrolled during 2001, this period
+is interesting in order to check if Enron employees worked differently, i.e.
+worked more or less.
+
 
 \section{Related work}
 TODO: Briefly discuss other reports of the mail data.
@@ -109,5 +120,7 @@ why we think we can ignore the shift in the mail data, why the assumption of
 core working hours is justified.
 
 \section{References}
+\bibliographystyle{plainnat}
+\bibliography{lib}
 
 \end{document}
