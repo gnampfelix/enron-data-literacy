@@ -23,7 +23,17 @@ def _read_folder2(path):
                     "date": message["date"]}
     return result   
     
-def parse_maildir2(path):
+def parse_maildir2(path, strip_migration_duplicates=True):
+    '''
+    Parses the given path as the "maildir" of the Enron mail corpus.
+    Returns a pandas.DataFrame. 
+    All folders are read, mails from @enron-addresses are stored in 
+    the resulting dataframe. Mails with the same sender, subject and 
+    date are considered duplocates, only the first encounter of this 
+    mail is kept. If "strip_migration_duplicates" is set to True, 
+    e-mails that differ only in hour, date or month are considered a
+    migration duplicate and are also removed.
+    '''
     df = pd.DataFrame(_read_folder2(path)).transpose()
     df = df[df["from"].str.contains("enron.com", case=False)].drop_duplicates(subset=["from", "subject", "date"])
     df["date"] = pd.to_datetime(df["date"], utc=True)
@@ -35,6 +45,7 @@ def parse_maildir2(path):
     df["hour"] = df["date"].apply(lambda x: x.time().hour)
     df["minute"] = df["date"].apply(lambda x: x.time().minute)
     df["second"] = df["date"].apply(lambda x: x.time().second)
-    df = df.sort_values(by="date").drop_duplicates(subset=["subject", "from", "minute", "second"],keep="first")
+    if strip_migration_duplicates:
+        df = df.sort_values(by="date").drop_duplicates(subset=["subject", "from", "minute", "second"],keep="first")
     return df
    
