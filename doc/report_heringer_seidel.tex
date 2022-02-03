@@ -56,18 +56,18 @@
 \begin{abstract}
   The Enron mail corpus provides real world corporate mail communication data. 
   The corpus contains mails by Enron personell during the phase in which Enron 
-  declarerd bankrupcy. We extract the core working hours of the Enron personell 
+  declared bankruptcy. We extract the core working hours of the Enron personell 
   from this dataset. The dataset indicates that Enron performed a migration 
   of their mail systems shortly before the scandal became public, which
-  introduces an intersting shift in the mails' time information. However, we
+  introduces an interesting shift in the mails' time information. However, we
   show that there is no significant change in core working hours over time.
 \end{abstract}
 
 \section{Introduction}
-After the US energy cooperation Enron declared bankrupcy in 2001
-\citep{10.1257/089533003765888403}, law enforcment agencies released enormous
+After the US energy cooperation Enron declared bankruptcy in 2001
+\citep{10.1257/089533003765888403}, law enforcement agencies released enormous
 amounts of e-mail communication between Enron employees to the public. This raw
-database export was cleaned up as the \emph{Enron Mail Corups} by
+database export was cleaned up as the \emph{Enron Mail Corpus} by
 \citet{Klimt2004IntroducingTE}. Today, this dataset contains over 500M mails
 from the mailboxes of Enron employees and can be accessed via
 \url{https://www.cs.cmu.edu/~enron/}. The e-mails contained in this dataset span
@@ -81,8 +81,19 @@ worked more or less.
 TODO: Briefly discuss other reports of the mail data.
 
 \section{Analyzing the time data}
-TODO: Describe our Hypothesis. Describe how we extracted the Date information, 
-how we removed duplicates and show plot of the dates over time.
+For our work we want to investigate whether there was any significant change in
+the amount that employees worked during the time that the declared bankruptcy.
+This of course is no proof of a direct causal link between these two events, but
+makes one at least more plausible.
+
+To analyze this hypothesis one needs to infer the probable working time from the
+times the emails were sent. Thus, the first task is to get these timestamps.
+As the files contained the headers of the email, the timestamps can be read from
+the \texttt{data}-field. To simplify the task only email from sent-folders were
+used as this removes automatically many duplicates (emails that are in one
+persons sent-folder and in another persons inbox) and mails from automatic
+system as well as newsletters. Additionally, from emails that had the same
+sender, subject, date and time only one was kept.
 
 \begin{center}
   \includegraphics[width=0.7\linewidth]{tmp/plot_all_mail.png}
