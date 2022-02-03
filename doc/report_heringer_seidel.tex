@@ -58,7 +58,9 @@
   from this dataset. The dataset indicates that Enron performed a migration of
   their mail systems shortly before the scandal became public, which introduces
   an interesting shift in the mails' time information. However, we show that
-  there is no significant change in core working hours over time.
+  there is no significant change in core working hours over time. \footnote{The
+  git-repository for this project can be found at
+  \url{https://github.com/gnampfelix/enron-data-literacy}.} 
 \end{abstract}
 
 \section{Introduction}
@@ -66,13 +68,15 @@ After the US energy cooperation Enron declared bankruptcy in 2001
 \citep{10.1257/089533003765888403}, law enforcement agencies released enormous
 amounts of e-mail communication between Enron employees to the public. This raw
 database export was cleaned up as the \emph{Enron Mail Corpus} by
-\citet{Klimt2004IntroducingTE}. Today, this dataset contains over 500M mails
+\citet{Klimt2004IntroducingTE}. Today, this dataset contains over 500M e-mails
 from the mailboxes of Enron employees and can be accessed via
-\url{https://www.cs.cmu.edu/~enron/}. The e-mails contained in this dataset span
-over multiple years, and interestingly, also contain e-mail conversations
-throughout 2000 and 2001. As the Enron scandal enrolled during 2001, this period
-is interesting in order to check if Enron employees worked differently, i.e.
-worked more or less.
+\url{https://www.cs.cmu.edu/~enron/}. This dataset is used in various resarch
+projects, e.g. for e-mail classification research by
+\citet{10.1007/978-3-540-30115-8_22} or graph analysis by
+\citet{Chapanond_2005}. The e-mails contained in this dataset span over multiple
+years, and interestingly, also contain e-mail conversations throughout 2000 and
+2001. As the Enron scandal enrolled during 2001, this period is interesting in
+order to check if Enron employees worked differently, i.e. worked more or less.
 
 \section{Analyzing the time data}
 For our work we want to investigate whether there was any significant change in
@@ -83,15 +87,15 @@ makes one at least more plausible.
 To analyze this hypothesis one needs to infer the probable working time from the
 times the emails were sent. Thus, the first task is to get these timestamps. As
 the files contained the headers of the email, the timestamps can be read from
-the \texttt{Date}-header \citep{rfc5322}. As we only care for the working hours
+the \texttt{Date} header \citep{rfc5322}. As we only care for the working hours
 of Enron employees (and not of those outside people who's mails just happen to
-be included in the Enron mail corpus), we only consider the mails that are
-actually sent by \emph{@enron.com} addresses. Mails from Enron employees that
+be included in the Enron Mail Corpus), we only consider the e-mails that are
+actually sent by \texttt{@enron.com} addresses. Mails from Enron employees that
 are sent \emph{to} Enron employees can be included multiple times in the Mail
-Corpus. The \texttt{Date}-Header is usually set by the sender \citep{rfc2821}.
-This can be the sender's client or the mail server, but never the receiver.
-Thus, we consider all mails with the same sender, subject and
-\texttt{Date}-Header to be the same.
+Corpus. The \texttt{Date} header is usually set by the sender \citep{rfc2821}.
+This can be the sender's client or the e-mail server, but never the receiver.
+Thus, we consider all e-mails with the same sender, subject and \texttt{Date}
+header to be the same.
 
 In Figure \ref{fig:allmail} all mails that are left by removing such duplicates
 are drawn. During 1999, the amount of e-mails is small and it increases
@@ -106,29 +110,28 @@ pre-February period.
 The reason for this shift can be found in the content of the e-mails: Starting
 in February 2001, Enron performed a migration from their Lotus Notes e-mail
 infrastructure to a Microsoft Outlook infrastructure. Each employee received a
-couple of e-mails from "team.outlook@enron.com", informing them of their
+couple of e-mails from \texttt{team.outlook@enron.com}, informing them of their
 individual migration date. On migration day, the e-mails of the last 30 days of
 the employee were moved to the new infrastructure automatically. Each employee
-was responsible to migrate older e-mails that they needed manually. When looking
+was responsible to manually migrate older e-mails that they need. When looking
 at the mailbox of individual employees, one can find duplicates that seem to be
 created during this period. Interestingly, the duplicates are the exact same
 e-mails, but have a \texttt{Date} header that is shifted by exactly five, six,
-ten or twelve hours. The dataset was originally created by exporting both the
-Lotus Notes database and the Microsoft Outlook database. If one database had a
-different time setting than the other, this could be a possible explanation for
-the observed duplicates and timeshifts.
+ten or twelve hours. We can only speculate what the precise reason for this
+shift is. One possible explanation is a misconfiguration of the different e-mail
+databases from which the dataset was exported.
 
 This is why the dataset as parsed for Figure \ref{fig:allmail} is not suitable
 to infer the core working hours directly, especially in the migration period:
 Duplicate mails with shifted time information that might be even duplicated and
 shifted multiple times more, due to them beeing present in multiple mailboxes
-that were migrated on different days, makes the results virtually unusable.
+that were migrated on different days, make the results virtually unusable.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\linewidth]{../src/fig001_mail_all.png}
    \caption{All mails in the Enron Mail Corpus that are sent by
-  "@enron.com"-addresses. The vertical red dashed line marks the beginning of
+  \texttt{@enron}.com addresses. The vertical red dashed line marks the beginning of
   the migration period with the usual start of the core working hours indicated
   by the horizontal red dashed line. The vertical blue dashed line marks the
   assumed end of the migration period with the new usual start of the core
@@ -148,22 +151,22 @@ exactly five, six, ten or twelve hours.
 
 The result of this is visualized in Figure \ref{fig:jeffmail}. By limiting the
 parsing to those four folders and by removing some more duplicates, we are able
-to reduce the noice drastically.
+to reduce the noise drastically.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\linewidth]{../src/fig002_mail_jeff.pdf}
   \label{fig:jeffmail}
   \caption{All mails in the Enron Mail Corpus that are sent by
-  "jeff.dasovich@enron.com". In all four plots, the red dashed line marks the
-  begin of Jeff's mail migration period, the blue dashed line the end. The black
-  dashed line marks the end of the 2001 daylight saving time in the USA. The
-  upper row shows all mails in the mail corpus where the sender is
-  "jeff.dasovich@enron.com", the lower row only those mails by
-  "jeff.dasovich@enron.com" that are in a "sent"-folder. The left column
-  considers e-mails with the same subject, sender, time and date duplicate. The
-  right column considers e-mails with the same subject, sender, minute and
-  second duplicate. }
+  \texttt{jeff.dasovich@enron.com}. In all four plots, the red dashed line marks
+  the begin of Jeff's e-mail migration period, the blue dashed line the end. The
+  black dashed line marks the end of the 2001 daylight saving time in the USA.
+  The upper row shows all e-mails in the mail corpus where the sender is
+  \texttt{jeff.dasovich@enron.com}, the lower row only those e-mails by
+  \texttt{jeff.dasovich@enron.com} that are in a \texttt{.*sent.*}-folder. The
+  left column considers e-mails with the same subject, sender, time and date
+  duplicate. The right column considers e-mails with the same subject, sender,
+  minute and second duplicate.}
 \end{figure}
 
 When using this deduplicated dataset and plotting boxplots (Figure
@@ -180,44 +183,43 @@ inferred.
 \begin{figure}
   \centering
   \includegraphics[width=1.0\linewidth]{../src/fig003_mails_boxplott.pdf}
-   \caption{The mail communication for 20 arbitrary Enron employees, the box 
+   \caption{The mail communication for 20 arbitrary Enron employees, the box
    limits are the 25th and the 75th quantile.}
   \label{fig:mailboxplot}
 \end{figure}
 
-We want to test if we can reject the $H_0$, that nothing has changed
-significantly in the amount of hours worked by the Enron staff over time. We assume the
-first half of 2000 to be our baseline, as there are only few datapoints before
-that date in the Enron Mail Corpus. We resampled that baseline 10000 times for
-each following month with a sample size equal to the amount of datapoints for
-that month and checked whether the average amount of hours worked is more
-extreme on both sides than the average amount of hours worked inferred from the
-data of that month. An excerp of this data is depicted in Table
-\ref{ta:pvalues}. We found no significant divergence from the baseline for any
-month in the dataset.
+We want to test if we can reject the $H_0$, that the amount of hours worked by
+the Enron staff has not changed significantly over time. We assume the first
+half of 2000 to be our baseline, as there are only few datapoints before that
+date in the Enron Mail Corpus. We resampled that baseline 10000 times for each
+following month with a sample size equal to the amount of datapoints for that
+month and checked whether the average amount of hours worked is more extreme on
+both sides than the average amount of hours worked inferred from the data of
+that month. An excerp of this data is depicted in Table \ref{ta:pvalues}. We
+found no significant divergence from the baseline for any month in the dataset.
 
 \begin{table}
+  \caption{The average working hours per month. The first half of 2000 acts as a
+  baseline against which the following months are checked for significant
+  divergence.}
   \centering
   \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
     \hline
     \textbf{month} & H1 00 & 06/01 & 07/01 & 08/01 & 09/01 & 10/01 & 11/01 &
     12/01 \\
     \hline
-    \textbf{hours} & 05:00 & 05:45 & 05:16 & 05:43 & 04:48 & 05:00 & 05:12 &
-    04:30 \\
+    \textbf{avg. hours} & 05:00 & 05:45 & 05:16 & 05:43 & 04:48 & 05:00 & 05:12
+    & 04:30 \\
     \hline
     \textbf{p-Value} & - & 0.524 & 0.530 & 0.522 & 0.503 & 0.525 & 0.521 & 0.520
     \\
     \hline
   \end{tabular}
-  \caption{The average working hours per month. The first half of 2000 acts as a
-  baseline against which the following months are checked for significant
-  divergence.}
   \label{ta:pvalues}
 \end{table}
 
 \section{Discussion}
-We've made some assumptions for our analysis that we want to discuss briefly. 
+We've made some assumptions for our analysis that we want to address briefly.
 Firstly, we assumed that we can infer the core working hours from the mail data.
 Every individual person might start or end their working day differently, e.g.
 by participating in daily meetings (no e-mail data at all) or by answering to
@@ -227,7 +229,17 @@ flexible arrangements (e.g. to watch over the kids during an extended lunch
 break). Also, there might be differences in the working hours that occur
 periodically (e.g. such as working less on Friday).
 
-\section{References}
+Secondly, the amount of e-mails sent by individuals depends in parts on the
+amount of e-mails they receive, i.e. an answer $B$ to an e-mail $A$ can naturally
+only be written after the initial e-mail $A$ was received. We acknowledge this
+by looking at the average working time for all employees in each month in terms
+of the 25th and the 75th quantile.
+
+Finally, we base our analysis on the assumption, that the time and date
+reconstruction from the original database export was performed consistently
+according to the appropriate RFC 5322 \citep{rfc5322} and RFC 2821
+\citep{rfc2821}, which might not be the case.
+
 \bibliographystyle{plainnat}
 \bibliography{lib}
 
