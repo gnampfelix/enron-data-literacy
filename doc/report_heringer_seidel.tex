@@ -70,13 +70,13 @@ amounts of e-mail communication between Enron employees to the public. This raw
 database export was cleaned up as the \emph{Enron Mail Corpus} by
 \citet{Klimt2004IntroducingTE}. Today, this dataset contains over 500M e-mails
 from the mailboxes of Enron employees and can be accessed via
-\url{https://www.cs.cmu.edu/~enron/}. This dataset is used in various resarch
-projects, e.g. for e-mail classification research by
+\url{https://www.cs.cmu.edu/~enron/}. This dataset is used in various research
+projects, e.g.~for e-mail classification research by
 \citet{10.1007/978-3-540-30115-8_22} or graph analysis by
 \citet{Chapanond_2005}. The e-mails contained in this dataset span over multiple
 years, and interestingly, also contain e-mail conversations throughout 2000 and
 2001. As the Enron scandal enrolled during 2001, this period is interesting in
-order to check if Enron employees worked differently, i.e. worked more or less.
+order to check if Enron employees worked differently, i.e.~worked more or less.
 
 \section{Analyzing the time data}
 For our work we want to investigate whether there was any significant change in
@@ -104,7 +104,7 @@ communication occurs between 06:00 and 20:00 and night times are clearly
 reflected in the amount of e-mail traffic. Starting February 2001, the silence
 in the night disappears and the data is becoming more noisy. From August 2001,
 we start to see a separation between working hours and non-working hours again,
-but the timeframe appears to be shifted +5 hours in comparison to the
+but the time frame appears to be shifted +5 hours in comparison to the
 pre-February period.
 
 The reason for this shift can be found in the content of the e-mails: Starting
@@ -124,7 +124,7 @@ databases from which the dataset was exported.
 This is why the dataset as parsed for Figure \ref{fig:allmail} is not suitable
 to infer the core working hours directly, especially in the migration period:
 Duplicate mails with shifted time information that might be even duplicated and
-shifted multiple times more, due to them beeing present in multiple mailboxes
+shifted multiple times more, due to them being present in multiple mailboxes
 that were migrated on different days, make the results virtually unusable.
 
 \begin{figure}
@@ -144,9 +144,9 @@ To reduce this noise, we limit our e-mail parsing to the folders
 By doing this, we naturally remove many duplicates, as only one mailbox can be
 the sender mailbox of a particular e-mail. Furthermore, we exclude sender
 addresses that are not represented with a mailbox in the dataset and would
-therefore only provide few datapoints. The remaining duplicates are removed by
+therefore only provide few data points. The remaining duplicates are removed by
 considering e-mails with the same sender, subject, minute and second as
-duplicate. This respects the time beeing shifted in some of the duplicates by
+duplicate. This respects the time being shifted in some of the duplicates by
 exactly five, six, ten or twelve hours.
 
 The result of this is visualized in Figure \ref{fig:jeffmail}. By limiting the
@@ -169,7 +169,7 @@ to reduce the noise drastically.
   minute and second duplicate.}
 \end{figure}
 
-When using this deduplicated dataset and plotting boxplots (Figure
+When using this de-duplicated dataset and plotting boxplots (Figure
 \ref{fig:mailboxplot}) for each employee, one still can see big differences
 between the individual employees. This might have different reasons like
 employees having different core working hours, flexible time management, working
@@ -190,12 +190,12 @@ inferred.
 
 We want to test if we can reject the $H_0$, that the amount of hours worked by
 the Enron staff has not changed significantly over time. We assume the first
-half of 2000 to be our baseline, as there are only few datapoints before that
-date in the Enron Mail Corpus. We resampled that baseline 10000 times for each
-following month with a sample size equal to the amount of datapoints for that
+half of 2000 to be our baseline, as there are only few data points before that
+date in the Enron Mail Corpus. We re-sampled that baseline 10000 times for each
+following month with a sample size equal to the amount of data points for that
 month and checked whether the average amount of hours worked is more extreme on
 both sides than the average amount of hours worked inferred from the data of
-that month. An excerp of this data is depicted in Table \ref{ta:pvalues}. We
+that month. An excerpt of this data is depicted in Table \ref{ta:pvalues}. We
 found no significant divergence from the baseline for any month in the dataset.
 
 \begin{table}
@@ -221,16 +221,16 @@ found no significant divergence from the baseline for any month in the dataset.
 \section{Discussion}
 We've made some assumptions for our analysis that we want to address briefly.
 Firstly, we assumed that we can infer the core working hours from the mail data.
-Every individual person might start or end their working day differently, e.g.
+Every individual person might start or end their working day differently, e.g.~
 by participating in daily meetings (no e-mail data at all) or by answering to
 e-mails of the last day (very much e-mail data). In general, we assumed that
 each working day has a well-defined start and end and did not consider more
-flexible arrangements (e.g. to watch over the kids during an extended lunch
+flexible arrangements (e.g.~to watch over the kids during an extended lunch
 break). Also, there might be differences in the working hours that occur
-periodically (e.g. such as working less on Friday).
+periodically (e.g.~such as working less on Friday).
 
 Secondly, the amount of e-mails sent by individuals depends in parts on the
-amount of e-mails they receive, i.e. an answer $B$ to an e-mail $A$ can naturally
+amount of e-mails they receive, i.e.~an answer $B$ to an e-mail $A$ can naturally
 only be written after the initial e-mail $A$ was received. We acknowledge this
 by looking at the average working time for all employees in each month in terms
 of the 25th and the 75th quantile.
