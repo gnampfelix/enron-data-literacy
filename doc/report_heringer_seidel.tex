@@ -80,13 +80,13 @@ order to check if Enron employees worked differently, i.e.~worked more or less.
 
 \section{Analyzing the time data}
 For our work we want to investigate whether there was any significant change in
-the amount that employees worked during the time that the declared bankruptcy.
+the amount that employees worked during the time they declared bankruptcy.
 This of course is no proof of a direct causal link between these two events, but
 makes one at least more plausible.
 
-To analyze this hypothesis one needs to infer the probable working time from the
-times the emails were sent. Thus, the first task is to get these timestamps. As
-the files contained the headers of the email, the timestamps can be read from
+To analyze this hypothesis, one needs to infer the probable working time from the
+times the e-mails were sent. Thus, the first task is to get these timestamps. As
+the files contained the headers of the e-mails, the timestamps can be read from
 the \texttt{Date} header \citep{rfc5322}. As we only care for the working hours
 of Enron employees (and not of those outside people who's mails just happen to
 be included in the Enron Mail Corpus), we only consider the e-mails that are
@@ -137,6 +137,7 @@ that were migrated on different days, make the results virtually unusable.
   assumed end of the migration period with the new usual start of the core
   working hours indicated by the horizontal blue dashed line.}
   \label{fig:allmail}
+  \vspace{-4mm}
 \end{figure}
 
 To reduce this noise, we limit our e-mail parsing to the folders
@@ -188,7 +189,7 @@ inferred.
   \label{fig:mailboxplot}
 \end{figure}
 
-We want to test if we can reject the $H_0$, that the amount of hours worked by
+We test whether we can reject $H_0$, that the amount of hours worked by
 the Enron staff has not changed significantly over time. We assume the first
 half of 2000 to be our baseline, as there are only few data points before that
 date in the Enron Mail Corpus. We re-sampled that baseline 10000 times for each
@@ -203,19 +204,19 @@ found no significant divergence from the baseline for any month in the dataset.
   baseline against which the following months are checked for significant
   divergence.}
   \centering
-  \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
-    \hline
+  \begin{tabular}{lcccccccc}
+    \toprule
     \textbf{month} & H1 00 & 06/01 & 07/01 & 08/01 & 09/01 & 10/01 & 11/01 &
     12/01 \\
-    \hline
+    \midrule
     \textbf{avg. hours} & 05:00 & 05:45 & 05:16 & 05:43 & 04:48 & 05:00 & 05:12
     & 04:30 \\
-    \hline
     \textbf{p-Value} & - & 0.524 & 0.530 & 0.522 & 0.503 & 0.525 & 0.521 & 0.520
     \\
-    \hline
+    \bottomrule
   \end{tabular}
   \label{ta:pvalues}
+  \vspace{-4mm}
 \end{table}
 
 \section{Discussion}
@@ -238,7 +239,7 @@ of the 25th and the 75th quantile.
 Finally, we base our analysis on the assumption, that the time and date
 reconstruction from the original database export was performed consistently
 according to the appropriate RFC 5322 \citep{rfc5322} and RFC 2821
-\citep{rfc2821}, which might not be the case.
+\citep{rfc2821}, which might not have been the case.
 
 \bibliographystyle{plainnat}
 \bibliography{lib}

@@ -4,6 +4,7 @@ data/maildir
 *.pdf
 *.csv
 doc/*
+!doc/*.pdf
 !*.tex
 !*.md
 !*.sty
